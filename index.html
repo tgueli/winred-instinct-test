@@ -1,240 +1,307 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>2026 Political Instinct Test</title>
-    <style>
-        * { box-sizing: border-box; }
-        body {
-            background-color: #fbfaf4;
-            margin: 0;
-            padding: 0;
-            color: #1b1f3a;
-            font-family: georgia, 'times new roman', serif;
-        }
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
-            background-color: #fbfaf4;
-            border: 2px solid #1b1f3a;
-            padding: 24px 22px 12px;
-            position: relative;
-        }
-        .header-strip {
-            background-color: #1b1f3a;
-            color: #ffffff;
-            text-align: center;
-            font-family: 'Courier New', Courier, monospace;
-            font-size: 11px;
-            letter-spacing: 3px;
-            padding: 10px 4px;
-            margin: -24px -22px 24px -22px; 
-        }
-        .info-sheet {
-            background-color: #f1efe6;
-            padding: 12px 14px;
-            font-family: 'Courier New', Courier, monospace;
-            font-size: 12px;
-            border: 1px solid #1b1f3a;
-            margin-bottom: 20px;
-        }
-        .red-text { color: #c8102e; }
-        .title {
-            text-align: center;
-            font-family: 'Arial Black', 'Arial Bold', Gadget, sans-serif;
-            font-size: 27px;
-            line-height: 1.08;
-            margin: 18px 0 8px;
-            text-transform: uppercase;
-        }
-        .subtitle {
-            text-align: center;
-            font-size: 14px;
-            font-style: italic;
-            color: #5f6272;
-            margin-bottom: 18px;
-        }
-        .body-text {
-            font-size: 15px;
-            line-height: 1.7;
-            margin-bottom: 14px;
-        }
-        .btn {
-            display: block;
-            width: 100%;
-            background-color: #c8102e;
-            color: #ffffff;
-            text-align: center;
-            font-family: 'Arial Black', 'Arial Bold', Gadget, sans-serif;
-            font-size: 15px;
-            letter-spacing: 2px;
-            padding: 15px 8px;
-            border: none;
-            cursor: pointer;
-            text-transform: uppercase;
-            margin-top: 20px;
-            transition: background-color 0.2s ease;
-        }
-        .btn:hover { background-color: #a00d24; }
-        .note {
-            text-align: center;
-            font-family: 'Courier New', Courier, monospace;
-            font-size: 11px;
-            letter-spacing: 2px;
-            color: #8b8d99;
-            margin-top: 8px;
-        }
-        .question-box { display: none; }
-        .question-text {
-            font-family: 'Arial Black', 'Arial Bold', Gadget, sans-serif;
-            font-size: 18px;
-            margin-bottom: 20px;
-            text-align: center;
-            color: #1b1f3a;
-        }
-        .option-btn {
-            display: block;
-            width: 100%;
-            background-color: #f1efe6;
-            color: #1b1f3a;
-            border: 2px solid #1b1f3a;
-            padding: 14px;
-            margin-bottom: 10px;
-            font-family: 'Arial Black', 'Arial Bold', Gadget, sans-serif;
-            font-size: 13px;
-            cursor: pointer;
-            text-transform: uppercase;
-            transition: all 0.2s ease;
-        }
-        .option-btn:hover {
-            background-color: #1b1f3a;
-            color: #ffffff;
-        }
-        .progress {
-            text-align: center;
-            font-family: 'Courier New', Courier, monospace;
-            font-size: 12px;
-            margin-bottom: 20px;
-            font-weight: bold;
-            color: #1b1f3a;
-        }
-        #end-screen { display: none; text-align: center; padding: 40px 0; }
-        .loader {
-            border: 4px solid #f1efe6;
-            border-top: 4px solid #c8102e;
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            animation: spin 1s linear infinite;
-            margin: 30px auto;
-        }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The 2026 Strategy Simulation</title>
+<style>
+  /* --- Global & Reset --- */
+  * { box-sizing: border-box; }
+  body { background-color: #e8e6df; margin: 0; padding: 20px; font-family: georgia, 'times new roman', serif; }
+  
+  /* --- Layout & Containers --- */
+  .quiz-container { max-width: 600px; margin: 0 auto; background-color: #fbfaf4; border: 2px solid #1b1f3a; color: #1b1f3a; }
+  .top-strip { background-color: #1b1f3a; color: #ffffff; text-align: center; font-family: 'Courier New', Courier, monospace; font-size: 11px; letter-spacing: 3px; padding: 10px 4px; text-transform: uppercase; }
+  .inner-content { padding: 24px 22px 12px; }
+  
+  .info-sheet { background-color: #f1efe6; padding: 12px 14px; border: 1px solid #1b1f3a; font-family: 'Courier New', Courier, monospace; font-size: 12px; margin-bottom: 20px; font-weight: bold; }
+  .info-sheet .score { color: #c8102e; }
+
+  /* --- Typography --- */
+  h1 { text-align: center; font-family: 'Arial Black', 'Arial Bold', Gadget, sans-serif; font-size: 27px; line-height: 1.08; margin: 18px 0 8px; text-transform: uppercase; }
+  h1 .red-text { color: #c8102e; display: block; margin-top: 5px; }
+  .subhead { text-align: center; font-size: 14px; font-style: italic; color: #5f6272; margin: 0 0 18px; line-height: 1.5; }
+  p { font-size: 15px; line-height: 1.7; margin: 0 0 14px; }
+  .bold-red { color: #c8102e; font-weight: bold; }
+  .close-text { text-align: center; font-weight: bold; font-size: 16px; margin-bottom: 14px; line-height: 1.6; }
+  .final-call { text-align: center; font-family: 'Arial Black', sans-serif; font-size: 20px; color: #c8102e; margin: 30px 0 15px; text-transform: uppercase; }
+  .note { text-align: center; font-family: 'Courier New', Courier, monospace; font-size: 11px; letter-spacing: 2px; color: #8b8d99; margin: 8px 0 2px; }
+
+  /* --- Div Elements & Signatures --- */
+  hr { border: none; border-top: 2px solid #1b1f3a; width: 55%; margin: 20px auto; }
+  .sig { text-align: center; font-family: 'Arial Black', 'Arial Bold', Gadget, sans-serif; font-size: 15px; margin: 12px 0 2px; }
+  .sig-title { text-align: center; font-size: 12px; font-style: italic; color: #5f6272; margin: 0 0 8px; }
+
+  /* --- Buttons & Inputs --- */
+  .btn-submit { display: block; width: 100%; background: #c8102e; color: #ffffff; font-family: 'Arial Black', 'Arial Bold', Gadget, sans-serif; font-size: 15px; letter-spacing: 2px; padding: 15px 8px; text-transform: uppercase; border: 0; border-radius: 0; cursor: pointer; text-align: center; transition: background 0.2s; margin-top: 15px; }
+  .btn-submit:hover { background: #a00c24; }
+  
+  .hidden { display: none !important; }
+  
+  /* --- Interactive Quiz UI --- */
+  .question-number { font-family: 'Arial Black', 'Arial Bold', sans-serif; color: #c8102e; font-size: 14px; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 1px; }
+  .question-text { font-family: 'Arial Black', 'Arial Bold', sans-serif; font-size: 18px; margin-bottom: 10px; line-height: 1.4; text-transform: uppercase; }
+  .question-desc { font-size: 15px; margin-bottom: 20px; line-height: 1.6; font-style: italic; color: #1b1f3a; }
+
+  .options-grid { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
+  .btn-option { background: #f1efe6; color: #1b1f3a; border: 1px solid #1b1f3a; border-radius: 0; padding: 14px; font-family: georgia, 'times new roman', serif; font-weight: 700; font-size: 15px; text-align: left; cursor: pointer; transition: all 0.2s; }
+  .btn-option:hover { background: #e8e6df; }
+  .btn-option.selected { background: #1b1f3a; color: #ffffff; border-color: #1b1f3a; }
+
+  /* --- Outro UI --- */
+  .profile-result { text-align: center; margin: 20px 0; padding: 20px; background: #e8e6df; border: 2px solid #1b1f3a; }
+  .profile-title { font-family: 'Arial Black', sans-serif; font-size: 22px; color: #c8102e; margin-bottom: 10px; text-transform: uppercase; }
+  .profile-desc { font-style: italic; font-size: 16px; margin: 0; }
+  
+  .pitch-box { padding: 18px; border: 1px solid #c8102e; background-color: #fffafb; margin-top: 20px; }
+  .pitch-text { font-family: georgia, 'times new roman', serif; font-size: 15px; line-height: 1.6; color: #1b1f3a; margin: 0; }
+</style>
 </head>
 <body>
 
-<div class="container" id="app">
-    <div class="header-strip">THE 2026 POLITICAL INSTINCT TEST &middot; 15 QUESTIONS</div>
-
-    <!-- START SCREEN -->
-    <div id="start-screen">
-        <div class="info-sheet">
-            NAME&nbsp;&nbsp;&nbsp;&nbsp;: PATRIOT<br>
-            STATE&nbsp;&nbsp;&nbsp;: YOUR STATE<br>
-            <span class="red-text">SCORE&nbsp;&nbsp;&nbsp;: UNGRADED &mdash; 15 OF 15 BLANK</span>
-        </div>
-
-        <div class="title">TEST YOUR POLITICAL INSTINCTS.<br><span class="red-text">IF DEMOCRATS TAKE THE HOUSE, WHAT HAPPENS?</span></div>
-        <div class="subtitle">Fifteen questions. Every one is about what you think happens next, not what you have been told.</div>
-
-        <p class="body-text">Patriot, Democrats need four seats to take the House. The House stands 218 to 214. Every public forecast this week has them favored to get there.</p>
-        <p class="body-text">So the question in your state is no longer whether it could happen. <strong><span class="red-text">It is what happens the morning after.</span></strong> Nobody knows for certain. But you have an instinct about it, and instincts are what this test measures.</p>
-        <p class="body-text">Fifteen questions. Each one asks what you think Democrats do first with the gavel. Pick the answer your gut gives you, not the one that sounds polite.</p>
-
-        <button class="btn" onclick="startTest()">START THE TEST &darr;</button>
-        <div class="note">ANSWERS ARE RECORDED ON SUBMISSION</div>
+<div class="quiz-container">
+  <div class="top-strip">The 2026 Strategy Simulation &middot; Interactive Scenario</div>
+  <div class="inner-content">
+    
+    <div class="info-sheet">
+      <span style="color:#1b1f3a;">NAME&nbsp;&nbsp;&nbsp;&nbsp;: PATRIOT</span><br>
+      <span style="color:#1b1f3a;">STATE&nbsp;&nbsp;&nbsp;: YOUR STATE</span><br>
+      <span class="score" id="score-display">STATUS&nbsp;&nbsp;: AWAITING STRATEGIC INPUT</span>
     </div>
 
-    <!-- QUESTION SCREEN -->
-    <div id="question-screen" class="question-box">
-        <div class="progress" id="progress-text">QUESTION 1 OF 15</div>
-        <div class="question-text" id="q-text">Loading question...</div>
-        <div id="options-container"></div>
+    <!-- VIEW 1: INTRO SCREEN -->
+    <div id="intro-screen">
+      <h1>The War Room.<br><span class="red-text">Map Out The Battle Plan.</span></h1>
+      <p class="subhead">This is not a standard quiz. This is a branching strategy simulation. Your answers change what happens next.</p>
+      
+      <p>Patriot, campaigns are not fought in a vacuum. Every move the radical left makes requires a counter-move from us. To win, we need to know how our strongest supporters want us to fight.</p>
+      <p>In this simulation, you will be presented with a series of rapidly evolving political scenarios. <span class="bold-red">Your choices will dictate the path the simulation takes.</span></p>
+      <p>Step into the War Room. Pick the strategy your gut gives you, not the one that sounds polite. Let's see what kind of strategist you are.</p>
+      
+      <button class="btn-submit" onclick="startSimulation()">ENTER THE WAR ROOM &darr;</button>
+      <p class="note">YOUR STRATEGY PATH IS RECORDED ON COMPLETION</p>
+      
+      <hr>
+      <p class="sig">Mark</p>
+      <p class="sig-title">House GOP Membership Office</p>
     </div>
 
-    <!-- END SCREEN -->
-    <div id="end-screen">
-        <div class="title">COMPILING RECORD...</div>
-        <div class="loader"></div>
-        <p class="body-text" id="end-message" style="display:none; font-family: 'Arial Black', Gadget, sans-serif; font-size: 18px; color: #c8102e; text-transform: uppercase;">
-            ANSWERS RECORDED.<br><br>SCROLL DOWN TO COMPLETE YOUR SUBMISSION.
-        </p>
+    <!-- VIEW 2: DYNAMIC QUESTION SCREEN -->
+    <div id="question-screen" class="hidden">
+      <div class="question-number" id="q-number">SCENARIO LOADING...</div>
+      <div class="question-text" id="q-text">Loading situation...</div>
+      <div class="question-desc" id="q-desc"></div>
+      
+      <div class="options-grid" id="options-container"></div>
+      
+      <button class="btn-submit hidden" id="next-btn" onclick="advanceSimulation()">LOCK IN DECISION &rarr;</button>
     </div>
 
+    <!-- VIEW 3: OUTRO SCREEN -->
+    <div id="outro-screen" class="hidden">
+      <h1>SIMULATION COMPLETE.</h1>
+      
+      <!-- Profile Generation -->
+      <div class="profile-result" id="profile-container">
+        <div class="profile-title" id="profile-title">Loading Profile...</div>
+        <div class="profile-desc" id="profile-desc">Loading...</div>
+      </div>
+
+      <p class="close-text">Your strategic blueprint is on record. We need leaders with your instincts to help us lead the fight ahead.</p>
+      
+      <div class="pitch-box">
+        <p class="pitch-text" id="pitch-text">Loading reality check...</p>
+      </div>
+      
+      <p class="final-call">Donate below to file your strategic answers.</p>
+      
+      <hr>
+      <p class="sig">Mark</p>
+      <p class="sig-title">House GOP Membership Office</p>
+    </div>
+
+  </div>
 </div>
 
 <script>
-    // I scaffolded 15 placeholder questions for you. You can swap out the strings easily.
-    const questions = [
-        { q: "What is their first priority?", opts: ["Pack the Supreme Court", "Amnesty for Illegals", "Raise Taxes"] },
-        { q: "Who dictates the agenda?", opts: ["The Radical Squad", "Establishment Liberals", "Shadow Donors"] },
-        { q: "What happens to the border?", opts: ["Total Amnesty", "Defund ICE completely", "Tear down the wall"] },
-        { q: "How do they handle taxes?", opts: ["Repeal Tax Cuts", "Implement Wealth Tax", "Increase Gas Tax"] },
-        { q: "What is their approach to elections?", opts: ["Ban Voter ID Nationwide", "Federalize all elections", "Mail-in voting mandate"] },
-        { q: "How do they handle the 2nd Amendment?", opts: ["National Confiscation", "Ban all semi-automatics", "Punishing taxes on ammo"] },
-        { q: "What happens to energy independence?", opts: ["Ban Fracking", "Mandate EVs by 2030", "Close domestic pipelines"] },
-        { q: "What is their first investigation?", opts: ["Conservative Leaders", "Independent Media", "Republican Donors"] },
-        { q: "How do they handle education?", opts: ["Mandate CRT", "Abolish School Choice", "Federalize curriculum"] },
-        { q: "What happens to policing?", opts: ["Defund at Federal level", "End Qualified Immunity", "Release violent offenders"] },
-        { q: "What is their foreign policy focus?", opts: ["Fund Globalist NGOs", "Appease adversaries", "Cut military funding"] },
-        { q: "How do they handle tech censorship?", opts: ["Partner to silence dissent", "Disinformation Boards", "Reward Monopolies"] },
-        { q: "What happens to healthcare?", opts: ["Socialized Medicine", "Abolish private insurance", "Taxpayer funded for illegals"] },
-        { q: "What is their stance on the economy?", opts: ["Price controls", "UBI implementation", "Green New Deal mandates"] },
-        { q: "Will they eliminate the filibuster to do this?", opts: ["Yes, immediately", "Yes, within 100 days", "They won't need to"] }
-    ];
+  /* 
+    BRANCHING LOGIC ENGINE
+  */
+  const journeyGraph = {
+    "q1_election": {
+      step: "SCENARIO 01",
+      title: "Election Night 2026.",
+      desc: "The map is tightening. What is your gut instinct on the final call for the House?",
+      options: [
+        { text: "We hold the line, keep the majority, and block the left's radical agenda.", nextId: "q2_majority" },
+        { text: "The extreme far-left takes the gavel by a razor-thin margin.", nextId: "q2_minority" }
+      ]
+    },
+    
+    /* --- BRANCH A: We kept the majority --- */
+    "q2_majority": {
+      step: "SCENARIO 02",
+      title: "Day One of the New Congress.",
+      desc: "We kept the gavel and the power. As we continue executing our successful agenda, what is the most urgent priority we push to the floor to stop the radical left from undermining us?",
+      options: [
+        { text: "Accelerate our border security crackdowns and fully defund remaining sanctuary cities.", nextId: "q3_border_fight" },
+        { text: "Root out and defund the embedded liberal activists secretly sabotaging our government from within.", nextId: "q3_activist_fight" }
+      ]
+    },
+    "q3_border_fight": {
+      step: "SCENARIO 03",
+      title: "Left-Wing Obstruction.",
+      desc: "We push a massive expansion of our border enforcement, but radical left-wing senators threaten a blockade to protect open borders. What is our counter-play?",
+      options: [
+        { text: "Refuse to pass any funding until our border measures are signed into law.", nextId: "end_hardliner" },
+        { text: "Expose their obstruction to the public and force vulnerable Democrats to vote on the record.", nextId: "end_strategist" }
+      ]
+    },
+    "q3_activist_fight": {
+      step: "SCENARIO 03",
+      title: "The Sabotage Standoff.",
+      desc: "We move to fire embedded liberal activists who are secretly undermining our policies, but far-left lawyers and union bosses file endless lawsuits to protect them. What is our next move?",
+      options: [
+        { text: "Bypass their bureaucratic red tape, strip their funding, and force them out of the government immediately.", nextId: "end_warrior" },
+        { text: "Defeat their lawsuits in the highest courts to legally dismantle their protections forever.", nextId: "end_institutionalist" }
+      ]
+    },
 
-    let currentQ = 0;
-
-    function startTest() {
-        document.getElementById('start-screen').style.display = 'none';
-        document.getElementById('question-screen').style.display = 'block';
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-        loadQuestion();
+    /* --- BRANCH B: Democrats took the minority --- */
+    "q2_minority": {
+      step: "SCENARIO 02",
+      title: "The Left Takes Over.",
+      desc: "The extreme left now controls the floor. What do you believe is their very first, most dangerous move?",
+      options: [
+        { text: "Destroying the Supreme Court by packing it with radical activists.", nextId: "q3_court_fight" },
+        { text: "Passing massive tax hikes to fund a socialist climate agenda.", nextId: "q3_tax_fight" }
+      ]
+    },
+    "q3_court_fight": {
+      step: "SCENARIO 03",
+      title: "The Institutional Attack.",
+      desc: "They officially file legislation to pack the Supreme Court. How do we stop their unconstitutional power grab?",
+      options: [
+        { text: "Total gridlock—grind all congressional business to an absolute halt.", nextId: "end_hardliner" },
+        { text: "Launch a massive nationwide grassroots campaign to overwhelm their offices with outrage.", nextId: "end_grassroots" }
+      ]
+    },
+    "q3_tax_fight": {
+      step: "SCENARIO 03",
+      title: "The Economic Threat.",
+      desc: "They try to force through crippling tax hikes on working families to fund their extreme social programs. Our response?",
+      options: [
+        { text: "Rally small business owners to flood the Capitol and demand a stop to the madness.", nextId: "end_grassroots" },
+        { text: "Use every aggressive procedural maneuver in the rulebook to stall the bill indefinitely.", nextId: "end_strategist" }
+      ]
     }
+  };
 
-    function loadQuestion() {
-        if (currentQ >= questions.length) {
-            endTest();
-            return;
-        }
-        document.getElementById('progress-text').innerText = `QUESTION ${currentQ + 1} OF 15`;
-        document.getElementById('q-text').innerText = questions[currentQ].q;
-        
-        const optsContainer = document.getElementById('options-container');
-        optsContainer.innerHTML = '';
-        
-        questions[currentQ].opts.forEach(opt => {
-            const btn = document.createElement('button');
-            btn.className = 'option-btn';
-            btn.innerText = opt;
-            btn.onclick = () => {
-                currentQ++;
-                loadQuestion();
-            };
-            optsContainer.appendChild(btn);
-        });
+  /* 
+    END PROFILES & CUSTOM PITCHES
+  */
+  const profiles = {
+    "end_hardliner": {
+      title: "The Uncompromising Hardliner",
+      desc: "You don't believe in backing down. In your War Room, we use every ounce of leverage we have—including shutting down the system—to force conservative victories and stop the radical left.",
+      pitch: "<span class='bold-red'>THE REALITY:</span> To execute your uncompromising strategy, we need leaders who refuse to cave. The extreme left is building a massive war chest to break our resolve and force their socialist policies. Your contribution right now builds the conservative firewall necessary to hold the line. We cannot execute this hardline battle plan without you."
+    },
+    "end_strategist": {
+      title: "The Tactical Strategist",
+      desc: "You play chess, not checkers. You understand that defeating the extreme left requires navigating the long game, using procedure, pressure, and smart legislation to outmaneuver them at every turn.",
+      pitch: "<span class='bold-red'>THE REALITY:</span> Outmaneuvering the radical left requires precision, resources, and playing the long game. They are funded by far-left billionaires eager to force their agenda. Your contribution right now gives us the tactical resources to expose their radical votes and win the crucial procedural fights ahead. We cannot execute this strategic battle plan without you."
+    },
+    "end_warrior": {
+      title: "The Frontline Warrior",
+      desc: "You are ready for a brawl. You believe in aggressive action, taking the fight directly to embedded liberal activists, and holding saboteurs accountable by any means necessary.",
+      pitch: "<span class='bold-red'>THE REALITY:</span> Rooting out embedded liberal activists requires a massive war chest. The radical left will do everything in their power, including funding endless lawsuits, to protect their left-wing saboteurs. Your contribution right now directly funds the aggressive push needed to fire them and drain the swamp. We cannot execute this frontline battle plan without you."
+    },
+    "end_institutionalist": {
+      title: "The Constitutional Defender",
+      desc: "You respect the rule of law. When the far-left tries to break the system or use endless lawsuits to protect their activists, you believe our best weapon is the Constitution and the highest courts in the land.",
+      pitch: "<span class='bold-red'>THE REALITY:</span> Defending the Constitution against the far-left's radical power grabs and legal warfare requires serious legislative firepower. They are determined to pack the courts and bypass the law. Your contribution right now directly funds our defense of American institutions. We cannot execute this constitutional battle plan without you."
+    },
+    "end_grassroots": {
+      title: "The Grassroots General",
+      desc: "You know that true power comes from the people. When the extreme left tries to force their socialist agenda, you believe the solution is mobilizing millions of Americans to put unstoppable pressure on Washington.",
+      pitch: "<span class='bold-red'>THE REALITY:</span> Mobilizing millions of Americans to overwhelm the radical left requires massive organizational resources. They are relying on extreme activists; we need to deploy the silent majority. Your contribution right now directly funds the ground game to pressure Washington. We cannot execute this grassroots battle plan without you."
     }
+  };
 
-    function endTest() {
-        document.getElementById('question-screen').style.display = 'none';
-        document.getElementById('end-screen').style.display = 'block';
-        
-        setTimeout(() => {
-            document.querySelector('.loader').style.display = 'none';
-            document.getElementById('end-message').style.display = 'block';
-        }, 2000);
+  let currentNodeId = "q1_election";
+  let selectedNextId = null;
+
+  function startSimulation() {
+    document.getElementById('intro-screen').classList.add('hidden');
+    document.getElementById('question-screen').classList.remove('hidden');
+    document.getElementById('score-display').innerText = "STATUS  : SIMULATION IN PROGRESS";
+    renderNode();
+  }
+
+  function renderNode() {
+    const node = journeyGraph[currentNodeId];
+    
+    document.getElementById('q-number').innerText = node.step;
+    document.getElementById('q-text').innerText = node.title;
+    document.getElementById('q-desc').innerText = node.desc;
+
+    const optionsContainer = document.getElementById('options-container');
+    optionsContainer.innerHTML = ''; 
+    document.getElementById('next-btn').classList.add('hidden'); 
+    selectedNextId = null; 
+
+    node.options.forEach((opt) => {
+      const btn = document.createElement('button');
+      btn.className = 'btn-option';
+      btn.innerHTML = `&#9634; ${opt.text}`;
+      btn.onclick = () => selectOption(btn, opt.nextId);
+      optionsContainer.appendChild(btn);
+    });
+  }
+
+  function selectOption(selectedBtn, nextId) {
+    const allButtons = document.querySelectorAll('.btn-option');
+    allButtons.forEach(btn => {
+        btn.classList.remove('selected');
+        btn.innerHTML = btn.innerHTML.replace('&#9632;', '&#9634;'); 
+    });
+    
+    selectedBtn.classList.add('selected');
+    selectedBtn.innerHTML = selectedBtn.innerHTML.replace('&#9634;', '&#9632;'); 
+    
+    selectedNextId = nextId;
+
+    const nextBtn = document.getElementById('next-btn');
+    if (nextId.startsWith('end_')) {
+      nextBtn.innerText = "FINALIZE STRATEGY \u2192";
+    } else {
+      nextBtn.innerText = "LOCK IN DECISION \u2192";
     }
+    nextBtn.classList.remove('hidden');
+  }
+
+  function advanceSimulation() {
+    if (selectedNextId.startsWith('end_')) {
+      showOutro(selectedNextId);
+    } else {
+      currentNodeId = selectedNextId;
+      renderNode();
+    }
+  }
+
+  function showOutro(endId) {
+    document.getElementById('question-screen').classList.add('hidden');
+    document.getElementById('outro-screen').classList.remove('hidden');
+    document.getElementById('score-display').innerText = `STATUS  : BLUEPRINT FINALIZED`;
+    
+    const result = profiles[endId];
+    
+    // Inject custom profile title, desc, and custom donation pitch
+    document.getElementById('profile-title').innerText = result.title;
+    document.getElementById('profile-desc').innerText = result.desc;
+    document.getElementById('pitch-text').innerHTML = result.pitch;
+  }
 </script>
+
 </body>
 </html>
